@@ -38,3 +38,17 @@ var curried = curry(add);
 console.log(curried(1)(2)(3)(100));
 
 // 106
+// 
+
+function curry(fn) {
+  let paramLength = fn.length;
+  let args = [];
+  return function() {
+    if (args.length < paramLength) {
+      args.push(arguments[0]);
+    } else {
+      fn.apply(fn, args);
+    }
+    return this;
+  }
+}

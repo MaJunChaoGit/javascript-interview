@@ -46,3 +46,22 @@ function Middleware() {
     this.next();
   }
 }
+
+function Middleware() {
+  let tasks = [];
+
+  this.use = function(fn) {
+    tasks.push(fn);
+    return this;
+  }
+
+  this.go = function(fn) {
+    tasks.push(fn);
+    this.next(fn);
+  }
+
+  this.next = function() {
+    var fn = tasks.shift();
+    fn.call(this, this.next.bind(this));
+  }
+}
