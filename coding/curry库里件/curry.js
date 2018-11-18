@@ -40,15 +40,15 @@ console.log(curried(1)(2)(3)(100));
 // 106
 // 
 
-function curry(fn) {
-  let paramLength = fn.length;
-  let args = [];
+function curry(cb) {
+  let args = [].slice.call(arguments, 1);
   return function() {
-    if (args.length < paramLength) {
-      args.push(arguments[0]);
+    const newArgs = args.concat(Array.from(arguments));
+
+    if (newArgs.length < cb.length) {
+      return curry(cb, ...newArgs);
     } else {
-      fn.apply(fn, args);
+      return cb(...newArgs);
     }
-    return this;
   }
 }

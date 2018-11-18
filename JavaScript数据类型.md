@@ -52,7 +52,7 @@
 >
 > 而在运行时检查的大都是弱类型语言，如: JavaScript,PHP等
 
-当然网上对于类型系统的一些概念，众说纷坛，不好严格定义，但是JavaScript是弱类型，动态类型检查几乎没有争议。
+当然网上对于类型系统的一些概念，众说纷坛，不好严格定义，但是JavaScript是弱类型，动态类型检查语言几乎没有争议。
 
 我们先看下何为弱类型，动态类型检查语言，有以下代码：
 
@@ -79,15 +79,17 @@ typeof foo; // boolean
 
 根据最新的 ECMAScript 标准定义了7种数据类型：
 
-- 6种[原始类型](https://developer.mozilla.org/en-US/docs/Glossary/Primitive)
+- 6种 [原始类型](https://developer.mozilla.org/en-US/docs/Glossary/Primitive)
   - [Boolean](https://developer.mozilla.org/en-US/docs/Glossary/Boolean)
   - [Null](https://developer.mozilla.org/en-US/docs/Glossary/Null)
   - [Undefined](https://developer.mozilla.org/en-US/docs/Glossary/Undefined)
   - [Number](https://developer.mozilla.org/en-US/docs/Glossary/Number)
   - [String](https://developer.mozilla.org/en-US/docs/Glossary/String)
   - [Symbol](https://developer.mozilla.org/en-US/docs/Glossary/Symbol) (ECMAScript 6新定义)
+
 - 和 [Object](https://developer.mozilla.org/en-US/docs/Glossary/Object)
 
+  ​
 
 
 ---
@@ -118,25 +120,153 @@ typeof foo; // boolean
      >
      >Truthy的值，当进行逻辑判断均为true。这里Truthy的值为Falsy的补集，即所有剩下的值。需要注意的是Infinity、空数组，"0"都是Truthy值。 
 
+  ​
+
 - **Null类型**
 
-  Null类型只有一个值：`null`
+  1. Null类型只有一个值：`null`
 
-  
+  2. MDN上对Null类型的定义主要体现在**generally intentionally**，也就是说Null类型通常是程序级别的，是程序员自主的行为，它就是表示空的对象指针。
+
+     >In computer science, a **null** value represents a reference that points, generally intentionally, to a nonexistent or invalid [object](https://developer.mozilla.org/en-US/docs/Glossary/object) or address. The meaning of a null reference varies among language implementations.
+
+  3. ```javascript
+     typeof null === 'object' // true
+     // 这里是一个遗留的bug问题，null就应该是null，因为它是一个原始类型的值
+     ```
+
+
+
 
 - **Undefined类型**
 
-  一个没有被赋值的变量会有个默认值`undefined`
+  1. `undefined` 表示一个没有赋值的变量，
 
-  
+  2. 函数没有返回值时，默认返回`undefined`
+
+  3. 一个并不存在的对象属性为`undefined`
+
+  4. 函数定义形参不传值，默认就是`undefined`
+
+  5. 在判断变量是否为`undefined`时,最好使用`typeof`进行判断,避免变量未定义时出现的潜在问题
+
+     ```javascript
+     var foo;
+     foo === undefined // true
+     // 这里的bar没有定义
+     bar === undefined // Uncaught ReferenceError: bar is not defined
+     // 我们换成typeof
+     typeof bar === "undefined" // true
+     ```
+
+  6. 在变量提升阶段，只声明未定义，默认就是`undefined`。
+
+     ```javascript
+     function foo() {
+       console.log(bar); // undefined
+       var bar = 1;
+       console.log(bar); // 1
+     }
+     foo();
+     ```
+
+     为了避免变量提升时的undefined所带来的潜在问题,我们可以使用let或者const定义变量。
+
+     ```javascript
+     function foo() {
+       console.log(bar); // Uncaught ReferenceError: bar is not defined
+       var bar = 1;
+       console.log(bar);
+     }
+     foo();
+     ```
+
+
+  ​
 
 - **Number类型**
 
+  1. JavaScript采用 **"IEEE 754 标准定义的双精度64位二进制格式的值"**表示数值，它的范围是-(2<sup>63</sup>-1)到2<sup>63</sup>-1。
+
+
+  2. 与其他编程语言不同的是,它并没有专门去区分浮点数和整数，也就是说我们在进行数字运算时一定要特别注意精度缺失的问题
+
+     >我们可以使用 [`Number.MAX_SAFE_INTEGER`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER) 和 [`Number.MIN_SAFE_INTEGER`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Number/MIN_SAFE_INTEGER) 或者 [`Number.isSafeInteger()`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Number/isSafeInteger) 来检查值是否在安全的整数取值范围内。 超出这个范围，JavaScript 中的数字不再安全了。
+
+     ```javascript
+     0.3 + 0.6 = 0.8999999999999999;
+     0.3 + 0.6 === 0.9 // false
+     ```
+
+     上述的浮点数类型精度就已经缺失了,那么我们如何去对浮点数进行运算呢?
+
+     ES6中引入ε，即Number.EPSILON，它代表一个极小的常量，**它表示1与大于1的最小浮点数之间的差**。
+
+     那么让我们看看如何去使用这个常量修改上面的判断吧！
+
+     ```javascript
+     // 我们为比较浮点类型部署了一个误差检查函数,当小于2的-52次方时就判断两者相同
+     function floatCompare(left, right) {
+     	return Math.abs(left - right) < Number.EPSILON;
+     }
+
+     floatCompart(0.3 + 0.6, 0.9); // true
+     ```
+
+  3. 除了表示浮点数，Number类型中还有一些带符号的值: `+Infinity`，`-Infinity` 和 `NaN`
+
+     >你可以使用常量 [`Number.MAX_VALUE`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_VALUE) 和 [`Number.MIN_VALUE`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Number/MIN_VALUE)来检查值是否大于或者小于`+/-Infinity`
+
+  4. 特别需要注意的是在一个数除以0的时候有不同的情况
+
+     ```javascript
+     42 / +0; // Infinity
+     42 / -0; // -Infinity
+     ```
+
+  Number类型的内容比较多，暂时先说到这里吧，把一些部分留到后面的Number精讲和类型转换中。
+
+  ​
+
+- **String类型**
+
+  1. JavaScript的String类型用于表示文本数据。它是一组16位的无符号整数值的“元素”。在字符串中的每个元素占据了字符串的位置。第一个元素的索引为0，下一个是索引1，依此类推。字符串的长度是它的元素的数量。
+
+  2. JavaScript 的字符串类型是不可更改的。这意味着字符串一旦被创建，就不能被修改。但是，可以基于对原始字符串的操作来创建新的字符串。例如：
+
+     ```javascript
+     var str = "foo";
+     var otherStr = str.concat("-bar");
+     console.log(str) // "foo";
+     console.log(otherStr) // "foo-bar";
+     // 可以看到原有的字符串没有被改变,而是重新创建了字符串otherStr并给其赋值为"foo-bar"
+     ```
+
+  String类型主要在其中API的使用，基础概念先到此为止，后续会有关于String类型的API讲解文章。
+
+  ​
+
+- **Symbol类型**
+
+  1. ES6引入了一种新的原始数据类型Symbol，表示独一无二的值。
+  2. 在ES6之前，对象的属性名只有字符串一种，而ES6新增了Symbol类型，它通过Symbol()这个函数生成，它是一个原生数据类型，不是一个对象！
+
+  Symbol无需多说，直接看[阮大的文章](http://es6.ruanyifeng.com/#docs/symbol)
+
+
+---
 
 
 
+#### 特殊的Object类型
 
+Object类型是指内存中可以被标识符引用的一块区域。
 
+而Object类型分配的与原始数据类型稍有不同，**内存空间为栈(stack)内存空间中存储了指针,该指针指向了堆(heap)中存储的Object类型数据，解释器启动时会先寻找栈中的地址，取得地址后从堆中取得具体的实体**。
+
+![img](http://upload-images.jianshu.io/upload_images/599584-8e93616d7afcf811.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+引用自[大佬的文章中的内存空间图解](http://www.cnblogs.com/dreamingbaobei/p/9815962.html)
 
 
 
