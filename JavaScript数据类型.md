@@ -1,6 +1,6 @@
 ### JavaScript数据类型
 
-
+[TOC]
 
 #### 序言
 
@@ -89,8 +89,7 @@ typeof foo; // boolean
 
 - 和 [Object](https://developer.mozilla.org/en-US/docs/Glossary/Object)
 
-  ​
-
+  
 
 ---
 
@@ -242,17 +241,18 @@ typeof foo; // boolean
      // 可以看到原有的字符串没有被改变,而是重新创建了字符串otherStr并给其赋值为"foo-bar"
      ```
 
-  String类型主要在其中API的使用，基础概念先到此为止，后续会有关于String类型的API讲解文章。
+  String类型主要在其中API的应用，基础概念先到此为止，后续会有关于String类型的API讲解文章。
 
-  ​
+  
 
 - **Symbol类型**
 
   1. ES6引入了一种新的原始数据类型Symbol，表示独一无二的值。
-  2. 在ES6之前，对象的属性名只有字符串一种，而ES6新增了Symbol类型，它通过Symbol()这个函数生成，它是一个原生数据类型，不是一个对象！
+  2. ES6之前，对象的属性名只有字符串一种，而ES6新增了Symbol类型，它通过Symbol()这个函数生成，它是一个原生数据类型，不是一个对象！
 
   Symbol无需多说，直接看[阮大的文章](http://es6.ruanyifeng.com/#docs/symbol)
 
+  
 
 ---
 
@@ -262,13 +262,65 @@ typeof foo; // boolean
 
 Object类型是指内存中可以被标识符引用的一块区域。
 
-而Object类型分配的与原始数据类型稍有不同，**内存空间为栈(stack)内存空间中存储了指针,该指针指向了堆(heap)中存储的Object类型数据，解释器启动时会先寻找栈中的地址，取得地址后从堆中取得具体的实体**。
+而Object类型分配的与原始数据类型稍有不同，**内存空间为栈(stack)内存空间中存储了指针,该指针指向了堆(heap)中存储的Object类型数据，解释器启动时会先寻找栈中的地址，取得地址后从堆中取得对应的实体**。
 
 ![img](http://upload-images.jianshu.io/upload_images/599584-8e93616d7afcf811.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 引用自[大佬的文章中的内存空间图解](http://www.cnblogs.com/dreamingbaobei/p/9815962.html)
 
+在JavaScript中，对象可以被看做是一组属性的集合，它可以通过字符串或者Symbol的属性名来访问属性值，并且这些属性可以自由增减。
 
+ECMAScript定义的对象中有两种属性：数据属性和访问器属性。 
+
+
+
+- **数据属性**
+
+  数据属性是键值对，并且每个数据属性拥有下列特性:
+
+  **数据属性的特性(Attributes of a data property)**
+
+  | 特性             | 数据类型           | 描述                                                         | 默认值    |
+  | ---------------- | ------------------ | ------------------------------------------------------------ | --------- |
+  | [[Value]]        | 任何Javascript类型 | 包含这个属性的数据值。                                       | undefined |
+  | [[Writable]]     | Boolean            | 如果该值为 `false，`则该属性的 [[Value]] 特性 不能被改变。   | true      |
+  | [[Enumerable]]   | Boolean            | 如果该值为 `true，`则该属性可以用 [for...in](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...in) 循环来枚举。 | true      |
+  | [[Configurable]] | Boolean            | 如果该值为 `false，`则该属性不能被删除，并且 除了 [[Value]] 和 [[Writable]] 以外的特性都不能被改变。 | true      |
+
+  **过时的属性(在ECMAScript 3定义的, 在ECMAScript 5被重命名) **
+
+  | 属性       | 类型    | 描述                                          |
+  | ---------- | ------- | --------------------------------------------- |
+  | Read-only  | Boolean | ES5 [[Writable]] 属性的反状态(Reversed state) |
+  | DontEnum   | Boolean | ES5 [[Enumerable]]  属性的反状态              |
+  | DontDelete | Boolean | ES5 [[Configurable]] 属性的反状态             |
+
+  
+
+- **访问器属性**
+
+  访问器属性有一个或两个访问器函数 (get 和 set) 来存取数值，并且有以下特性: 
+
+  | 特性             | 类型                   | 描述                                                         | 默认值    |
+  | ---------------- | ---------------------- | ------------------------------------------------------------ | --------- |
+  | [[Get]]          | 函数对象或者 undefined | 该函数使用一个空的参数列表，能够在有权访问的情况下读取属性值。另见 `get。` | undefined |
+  | [[Set]]          | 函数对象或者 undefined | 该函数有一个参数，用来写入属性值，另见 `set。`               | undefined |
+  | [[Enumerable]]   | Boolean                | 如果该值为 `true，则该属性可以用` [for...in](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...in) 循环来枚举。 | true      |
+  | [[Configurable]] | Boolean                | 如果该值为 `false，则该属性不能被删除，并且不能被转变成一个数据属性。` | true      |
+
+
+
+> **注意：这些特性只有 JavaScript 引擎才用到，因此你不能直接访问它们。所以特性被放在两对方括号中，而不是一对。**
+
+
+
+对象的知识点不仅仅如此，也会另外单独写一篇文章来讲解。
+
+#### 总结
+
+对于JavaScript，基础类型以及一些基础的知识就差不多了，本文抛砖引玉，希望能够帮助到更多的人。
+
+以下是文章的中部分观点的引用，侵删致歉。
 
 
 
