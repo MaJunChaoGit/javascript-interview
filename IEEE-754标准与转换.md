@@ -42,5 +42,85 @@
 
 1985年时，IEEE推出了[IEEE 754-1985](https://en.wikipedia.org/wiki/IEEE_754-1985)标准，随着大佬们的努力，IEEE还推出了目前的版本——[IEEE 754-2008](https://en.wikipedia.org/wiki/IEEE_754-2008_revision)。
 
-而我们使用的高级语言中浮点数的运算，如JavaScript、Java都是基于这个标准而定。
+而我们使用的高级语言中浮点数的运算，如C、C++、JavaScript、Java都是基于这个标准而定。
 
+ 
+
+#### IEEE 754规范
+
+1. **组成**
+
+   IEEE 754标准中，浮点格式主要分为四种类型，即单精度格式、双精度格式、扩展单精度格式和扩展双精度格式。它们的构成都由以下三部分组成：
+
+   - 符号位，控制数值的正负
+   - 指数位，控制数值的大小
+   - 尾数位，控制数值的精度
+
+   我们以64位的双精度Double类型为例，他的构成是如下图所示。
+
+   ![img](https://img-blog.csdn.net/20180821174847621?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzM2NTIxNjU1/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
+
+   - 第1位：符号位，`0`表示正数，`1`表示负数
+   - 第2位到第12位（共11位）：指数部分，指数部分一共有11个二进制位，最大是11个`1`，即范围为`0`到`2047`。
+   - 第13位到第64位（共52位）：尾数部分（即有效数字）
+
+   ​
+
+   所有四种浮点格式各个部分组成如下图，引用自[QAWRA](https://blog.csdn.net/wallc/article/details/72674712)![浮点格式参数](https://img-blog.csdn.net/20170524111255109?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvd2FsbGM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+
+2. **正规化**
+
+   对于我们平常计算来说，小数`0.0011`既可以表示成`1.1 x 10<sup>-3</sup>`，也可以表示成`11 x 10<sup>-4</sup>`。
+
+   但是对于**机器数**而言，统一的标准规范它首要需要**正规化**，也就是表示为如下形式：
+
+   ![img](https://upload-images.jianshu.io/upload_images/6168671-e7f76c9418c334b9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/163/format/webp)
+
+   上图中`b`是由`0`或`1`构成的二进制数，`b`通常由`十进制`转`二进制`而来，它会自动忽略起始位置的**隐藏位**`1.`，`b`最终存入上图中`尾数部分`。`p`加上`移码`后的二进制数存入上图`指数部分`。
+
+   >正规化可以让计算机在表示浮点数时多一位的精度，因为使用类似科学计数法表示的话，最左边通常状态下都为`1`
+
+   ​
+
+   > 以**64双精度浮点数**为例，正规化后的二进制浮点数（除了`0`之外）都是以`1.`开始，那么为了得到额外了1位精度，只要指数`p`在经过`移码`后数值在`0`到`2047`的范围之间（不含两个端点），尾数部分的第一位默认总是`1`，并且这个数字不会保存在64位浮点数之中。
+
+   ​
+
+3. **移码**
+
+   ​
+
+
+
+https://www.jianshu.com/p/e5d72d764f2f
+
+https://blog.csdn.net/fwb330198372/article/details/70238982/
+
+https://blog.csdn.net/wallc/article/details/72674712
+
+http://www.maixj.net/ict/ieee-754-15568
+
+https://www.cnblogs.com/kefeiGame/p/8529089.html
+
+https://blog.csdn.net/jvandc/article/details/81176294
+
+  也就是说，尾数部分将是`1.fffff...`的形式，其中`fffff...`的部分保存在有效数字部分（13位到64位），最长为52位。因此，JavaScript提供的有效数字最长为（52 + 1）的二进制位。
+
+  通过上述结论我们可以得到以下求值公式。
+
+```
+    (-1) ^ 符号位 * 1.fffff... * 2 ^ 指数部分 - 1023
+```
+
+​    下面我们使用`4399`这个十进制整数我们套用上述公式，反推得到以下64位2进制浮点数结果。
+
+1. 首先我们将`4399`转为2进制数`1000100101111`，因为是正数，那么符号位为 `0`。 然后我们根据正规化的二进制浮点数表达，那么它以`1.fffff...`这种形式表示为`1.000100101111 x 2<sup>12</sup>`
+
+
+1. 去除隐藏位`1`之后尾数部分为：`000100101111`。
+
+2. 指数`12`经过偏移加上`1023`换算为二进制：`10000001011`。
+
+3. 最终在计算机中存储的结果为：` 0-10000001011-00010010111100...000`
+
+   推荐大家一个[IEEE 754 64位转换工具](http://www.binaryconvert.com/convert_double.html)方便大家测试自己的运算结果
