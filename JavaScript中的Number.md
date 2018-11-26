@@ -1,29 +1,18 @@
-### JavaScript中的Number
+####目录
 
 [TOC]
-
-#### 序言
-
-
-
-**数值精度怎么缺失了 ？**
-
-在[JavaScript的数据类型](https://blog.csdn.net/m0_37972557/article/details/84284477)一文中`Number`的部分介绍中我们遇到了以下问题，当时是以`Number.EPSILON `辅助最终解决了问题。
-
-```
-0.1 + 0.2 = 0.30000000000000004;
-0.1 + 0.2 === 0.3; // false
-```
-
-但是到底是什么问题导致这样的结果呢，让我们往下看。
-
-
 
 ---
 
 
 
 #### 概述
+
+
+
+
+
+
 
 - **整数还是浮点数 ?**
 
@@ -52,14 +41,11 @@
   toInt32(Math.pow(2, 32) - 1) // -1
   ```
 
-  对于一般的整数，返回值不会有所变化。对于大于2<sup>32</sup>的整数，大于32位的整数的数位都会被舍去。
-
-
-- ​
+  对于一般的整数，返回值不会有所变化。对于大于2<sup>32</sup>的整数，大于32位的整数的数位都会被去。
 
 
 
-https://blog.csdn.net/u013347241/article/details/79210840
+####Number数值精度
 
 ####Number的不同进制表示方法
 
@@ -71,18 +57,15 @@ https://blog.csdn.net/u013347241/article/details/79210840
 
 #### Math对象中的方法
 
-https://www.cnblogs.com/fangchunying/p/9022783.html
 
-https://en.wikipedia.org/wiki/IEEE_754-1985
+
+
 
 http://javascript.ruanyifeng.com/grammar/number.html
 
-https://blog.csdn.net/charles_neil/article/details/59125861
 
-https://blog.csdn.net/sinat_36521655/article/details/81911329
 
 https://blog.csdn.net/a2296096931/article/details/51213543
 
-https://www.cnblogs.com/youyoui/p/8423199.html 
 
-https://segmentfault.com/a/1190000008268668
+
