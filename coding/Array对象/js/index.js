@@ -90,3 +90,50 @@ arr // ['a', 'b', 'c', 'd', 1 ,2]
 [10111, 1101, 111].sort(function (a, b) {
   return a - b;
 });
+
+// map方法将数组的所有成员依次传入参数函数，然后把每一次的执行结果组成一个新数组返回
+var arr = [1, 2, 3];
+arr.map(function(value) {
+  return value**value;
+});
+arr // [1, 4, 27]
+
+// forEach方法与map相似，也是对数组的所有成员依次执行参数函数，但是forEach方法没有返回值
+var arr = [1, 2, 3];
+arr.forEach(function(value, index, array){
+
+});
+
+// filter方法用于过滤数组成员，满足条件的成员组成一个新数组返回,该方法不会改变原数组
+var arr = [1, 2, 3, ,4 ,5];
+arr.filter(function(value) {
+  return (value > 3);
+});
+// [4, 5]
+
+// some方法只要一个成员的返回信息是true，则整个some方法的返回值就是true,否则就是false
+var arr = [1, 2, 3, 4, 5];
+arr.some(function (value) {
+  return value >= 3;
+});
+// true
+
+// every方法是所有成员的返回值都是true, 整个every方法才返回true, 否则返回false
+var arr = [1, 2, ,3 ,4 ,5];
+arr.every(function (value) {
+  return value >= 3;
+});
+// false
+
+// reduce方法和reduceRight方法依次处理数组的每个成员，最终累计为一个值
+[1, 2, 3, 4, 5].reduce(function(prev, curr) {
+  return prev + curr;
+});
+
+// indexOf方法返回值给定元素在数组中第一次出现的位置，如果没有出现则返回-1
+var a = ['a', 'b', 'c'];
+a.indexOf('b') // 1
+a.indexOf('y') // -1
+// 接受第二个参数参数，表示搜索的开始位置
+['a', 'b', 'c'].indexOf('a', 1); // -1
+// lastIndexOf则相反
