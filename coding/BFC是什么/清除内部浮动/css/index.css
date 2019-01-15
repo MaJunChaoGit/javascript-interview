@@ -1,0 +1,11 @@
+.par {
+  border: 5px solid red;
+  width: 300px;
+  overflow: hidden;
+}
+.child {
+  border: 5px solid blue;
+  width: 100px;
+  height: 100px;
+  float: left;
+}

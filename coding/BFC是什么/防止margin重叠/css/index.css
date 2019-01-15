@@ -1,0 +1,11 @@
+.wrap {
+  overflow: hidden;
+}
+p {
+  color: red;
+  background: blue;
+  width: 200px;
+  line-height: 100px;
+  text-align: center;
+  margin: 100px;
+}
