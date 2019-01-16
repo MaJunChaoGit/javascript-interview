@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+  <input type="text" id="debounce">
+
+  <div id="throttle">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum, alias reprehenderit! Dolore voluptatum atque praesentium eius soluta vel ducimus nesciunt eligendi provident ea adipisci voluptatibus, culpa repellat ut alias amet.</div>
+  <script type="text/javascript">
+    function throttle(fn, interval) {
+      var firstTime = true;
+      var timer;
+
+      return function() {
+        
+        var _me = this;
+        var args = arguments;
+
+        if (firstTime) {
+          fn.apply(_me, args);
+        }
+        if (timer) {
+          return false;
+        }
+
+        timer = setTimeout(function() {
+          clearTimeout(timer);
+          timer = null;
+          fn.apply(_me, args);
+        }, interval || 500);
+      }
+    }
+
+    document.getElementById('throttle').onscroll = throttle(function(event) {
+      var w= parseInt(event.target.offsetWidth);
+      event.target.style.width = (w + 10) + "px";
+      console.log('我被滚动了');
+    }, 1000);
+  </script>
+  <script type="text/javascript">
+    var processor = {  
+      timeoutId: null,
+      performProcessing: function() {
+        console.log('发送模糊查询请求');
+      },
+      process: function() {
+        var that = this;
+        clearTimeout(this.timeoutId);    
+        this.timeoutId = setTimeout(function() {
+          that.performProcessing();
+        }, 300)
+      }
+    }
+    document.getElementById('debounce').oninput = function() {
+      processor.process();
+    }
+  </script>
+</body>
+</html>
