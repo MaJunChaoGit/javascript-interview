@@ -1,0 +1,26 @@
+.container {
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  border: 1px solid red;
+}
+.float {
+  display: table-footer-group;
+  float: right;
+}
+/* 只要使用了float就意味着使用块布局，并且在以下display情况使用float会导致display计算值发生变化 */
+/* 
+inline              block
+inline-block        block
+inline-table        table
+table-row           block
+table-row-group     block
+table-column        block
+table-column-group  block
+table-cell          block
+table-caption       block
+table-header-group  block
+table-footer-group  block
+flex                flex, 但是float对这样的元素不起作用
+inline-flex         inline-flex, 但是float对这样的元素不起作用
+other               unchanged */
