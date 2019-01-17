@@ -10,27 +10,21 @@
 
   <div id="throttle">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum, alias reprehenderit! Dolore voluptatum atque praesentium eius soluta vel ducimus nesciunt eligendi provident ea adipisci voluptatibus, culpa repellat ut alias amet.</div>
   <script type="text/javascript">
-    function throttle(fn, interval) {
-      var firstTime = true;
-      var timer;
-
+    var throttle = function(func, delay) {
+      var timer = null;
+      var startTime = Date.now();
       return function() {
-        
-        var _me = this;
+        var curTime = Date.now();
+        var remaining = delay - (curTime - startTime);
+        var context = this;
         var args = arguments;
-
-        if (firstTime) {
-          fn.apply(_me, args);
+        clearTimeout(timer);
+        if (remaining <= 0) {
+          func.apply(context, args);
+          startTime = Date.now();
+        } else {
+          timer = setTimeout(func.bind(context, ...args), remaining);
         }
-        if (timer) {
-          return false;
-        }
-
-        timer = setTimeout(function() {
-          clearTimeout(timer);
-          timer = null;
-          fn.apply(_me, args);
-        }, interval || 500);
       }
     }
 
