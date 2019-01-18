@@ -10,24 +10,54 @@
 
   <div id="throttle">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum, alias reprehenderit! Dolore voluptatum atque praesentium eius soluta vel ducimus nesciunt eligendi provident ea adipisci voluptatibus, culpa repellat ut alias amet.</div>
   <script type="text/javascript">
+    // 时间戳方式
+    var throttle = function(func, delay) {
+      var prev = Date.now();
+      return function() {
+        var context = this;
+        var args = arguments;
+        var curr = Date.now();
+        if (delay - (curr - prev) <= 0) {
+          func.apply(context, args);
+          prev = Date.now();
+        }
+      }
+    }
+    // 定时器方式
+    var throttle = function(func, delay) {
+      var timer = null;
+      return function() {
+        var context = this;
+        var args = arguments;
+        if (!timer) {
+          timer = setTimeout(function() {
+            func.apply(context, args);
+            timer = null;
+          }, delay);
+        }
+      }
+    }
+    // 定时器和时间戳组合方式
     var throttle = function(func, delay) {
       var timer = null;
       var startTime = Date.now();
       return function() {
-        var curTime = Date.now();
-        var remaining = delay - (curTime - startTime);
+        var currTime = Date.now();
         var context = this;
         var args = arguments;
+        var remaining = delay - (currTime - startTime);
         clearTimeout(timer);
         if (remaining <= 0) {
           func.apply(context, args);
           startTime = Date.now();
         } else {
-          timer = setTimeout(func.bind(context, ...args), remaining);
+          timer = setTimeout(function() {
+            func.apply(context, args);
+            startTime = Date.now();
+          }, remaining);
         }
       }
     }
-
     document.getElementById('throttle').onscroll = throttle(function(event) {
       var w= parseInt(event.target.offsetWidth);
       event.target.style.width = (w + 10) + "px";
@@ -35,19 +65,18 @@
     }, 1000);
   </script>
   <script type="text/javascript">
-    var processor = {  
-      timeoutId: null,
+    var processor = {
+      timer: null,
       performProcessing: function() {
-        console.log('发送模糊查询请求');
+        console.log('请求后台数据');
       },
-      process: function() {
-        var that = this;
-        clearTimeout(this.timeoutId);    
-        this.timeoutId = setTimeout(function() {
-          that.performProcessing();
-        }, 300)
+      process:function() {
+        clearTimeout(this.timer);
+        this.timer = setTimeout(this.performProcessing, 300);
       }
     }
+    
+    
     document.getElementById('debounce').oninput = function() {
       processor.process();
     }
