@@ -42,9 +42,9 @@
       var timer = null;
       var startTime = Date.now();
       return function() {
-        var currTime = Date.now();
         var context = this;
         var args = arguments;
+        var currTime = Date.now();
         var remaining = delay - (currTime - startTime);
         clearTimeout(timer);
         if (remaining <= 0) {
@@ -58,6 +58,7 @@
         }
       }
     }
+
     document.getElementById('throttle').onscroll = throttle(function(event) {
       var w= parseInt(event.target.offsetWidth);
       event.target.style.width = (w + 10) + "px";

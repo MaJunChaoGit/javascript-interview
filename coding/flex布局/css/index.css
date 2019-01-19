@@ -1,0 +1,98 @@
+/* 1.注意设置为flex的容器的子元素,float,clear,vertical-align属性都将失效 */
+
+/*
+  以下6个属性设置在flex的容器上
+  1.flex-direction
+  2.flex-wrap
+  3.flex-flow
+  4.justify-content
+  5.align-items
+  6.align-content
+ */
+
+
+/* 
+  flex-direction有4种常用值
+  1.row（默认值）：主轴为水平方向，起点在左端。
+  2.row-reverse：主轴为水平方向，起点在右端。
+  3.column：主轴为垂直方向，起点在上沿。
+  4.column-reverse：主轴为垂直方向，起点在下沿。
+*/
+
+/*
+  flex-wrap有三种常用值
+  1.nowrap : 默认不换行;
+  2.wrap : 当父容器放不下自动换行, 第一行在上方;
+  3.wrap-reverse : 当父容器放不下自动换行, 第一行在下方;
+ */
+
+/*
+  flex-flow是flex-direction和flex-wrap的结合
+  flex-flow: <flex-direction> <flex-wrap>;
+ */
+
+/*
+  justify-content有5种常用属性
+  1.flex-start 左对齐
+  2.flex-end 右对齐
+  3.center 居中对齐
+  4.space-between  两端对齐,项目之间间隔相等
+  5.space-around 每个项目两侧的间隔相等,项目之间的间隔比项目与边框的间隔大一倍
+ */
+
+/*
+  align-item有5种常用属性
+  1.flex-start 交叉轴起点对齐
+  2.flex-end 交叉轴终点对齐
+  3.center 交叉轴中点
+  4.baseline 项目的第一行文字
+  6.stretch: 项目未设置高度或设为auto, 将占满整个容器的高度;
+ */
+
+/*
+  align-content有6种常用属性
+  1.flex-start 交叉轴起点对齐
+  2.flex-end 交叉轴终点对齐
+  3.center 交叉轴中点对齐
+  4.space-between 交叉轴两端对齐,轴线之间平均分布
+  5.space-around 每个轴线两侧的间隔相等,轴线之间间隔不会重叠,所以与边框的间隔大一倍
+  6.stretch: 轴线占满整个交叉轴;
+ */
+.box {
+  width: 30%;
+  height: 300px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  border: 1px solid red;
+}
+
+/* 以下是item应用属性 */
+/* order定义了项目的排列顺序,正序排列,默认为0 */
+/* 
+  flex-grow定义了项目的放大比例,默认为0,即存在剩余空间也不放大 
+  如果是多轴对齐的话设置了flex-grow的项目的会优先填满所在轴
+
+  比例的计算为,剩余空间的宽度 * 当前项目的比例/所有项目设置的比例和
+*/
+/* flex-basis我的理解是可以利用具体的像素来设置flex-grow和flex-shrink */
+/* 
+  flex-shrink定义了项目的缩小比例,默认为1,即空间不足,该项目缩小
+  如果是多轴对齐的话不起作用
+  单轴的话可以定义最小弹性比例
+  关于比例的计算, 缩放空间的宽度 * 当前项目的比例/所有项目设置的比例和
+ */
+
+/* flex属性是flex-grow,flex-shrink,flex-basis的简写 */
+/* align-self属性允许当前项目覆盖父类的align-items ,属性与align-items相同*/
+.item {
+  width: 100px;
+  height: 100px;
+  background-color: orange;
+  margin: 10px;
+  text-align: center;
+  line-height: 100px;
+  color: white;
+  font-size: 24px;
+}
