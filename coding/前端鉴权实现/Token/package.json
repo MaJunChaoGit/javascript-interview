@@ -1,0 +1,8 @@
+{
+  "devDependencies": {
+    "body-parser": "^1.18.3",
+    "chalk": "^2.4.2",
+    "express": "^4.16.4",
+    "jwt-simple": "^0.5.5"
+  }
+}
