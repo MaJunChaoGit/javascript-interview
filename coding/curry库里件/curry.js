@@ -53,6 +53,43 @@
 //   }
 // }
 
+// function curry(cb) {
+//   let args = [].slice.call(arguments, 1);
+//   return function() {
+//     const newArgs = args.concat(Array.from(arguments));
+//     if (newArgs.length < cb.length) {
+//       return curry(cb, ...newArgs);
+//     } else {
+//       return cb(...newArgs);
+//     }
+//   }
+// }
+
+
+// function curry(cb) {
+//   let args = [].slice.call(arguments, 1);
+//   return funtcion() {
+//     const newArgs = args.concat(Array.from(arguments));
+//     if (newArgs.length < cb.length) {
+//       return curry(cb, ...newArgs);
+//     } else {
+//       return cb(...newArgs);
+//     }
+//   }
+// }
+
+// function curry(cb) {
+//   let args = [].slice.call(arguments, 1);
+//   return function() {
+//     const newArgs = args.concat(Array.from(arguments));
+//     if (newArgs.length < cb.length) {
+//       return curry(cb, ...newArgs);
+//     } else { 
+//       return cb(...newArgs);
+//     }
+//   }
+// } 
+
 function curry(cb) {
   let args = [].slice.call(arguments, 1);
   return function() {
