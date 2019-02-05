@@ -5,7 +5,6 @@ class Routers {
     this.pre = null;
     this.current = null;
     window.addEventListener('hashchange', function (ev) {
-      debugger
       let pre = ev.oldURL.split('#')[1];
       let cur = ev.newURL.split('#')[1];
       let preR = this.getByUrlOrName(pre);
