@@ -10,3 +10,4 @@ history模式主要使用了HTML5中history的pushState,replaceState方法,他�
 2. hash模式传参只能传入简单的字符串,history则可以通过state参数进行对象的传入
 3. hash模式下,仅符号前的内容会被包含在请求中,也就是说直接回车刷新是不会产生错误页面的.而对于history来说需要服务端进行请求的过滤拦截处理
 
+
