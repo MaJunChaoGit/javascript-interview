@@ -6,11 +6,12 @@
 
 2. **Vuex的核心思想**
 
+   已有文章
+
 3. **Vuex持久化**
 
-   持久化使用vuex-persistedstate插件进行持久化,通过将state状态保存在localStorage中可以进行持久化.
+   持久化使用vuex-persistedstate插件进行持久化,通过将state状态进行序列化保存在localStorage中可以进行持久化.在刷新页面的时候,通过读取localStorage中的数据进行反序列化就完成了持久化.
 
 4. **Vuex异步修改值**
 
    使用mutations进行修改通过在操作,使用actions进行异步修改状态.
-
