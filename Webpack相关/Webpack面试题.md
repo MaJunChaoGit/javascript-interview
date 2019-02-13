@@ -52,15 +52,14 @@
 
    plugin的作用是用于拓展一些webpack的功能,它将直接作用与webpack之上,相比于loader只专注于解析加载文件,plugin的功能更加的丰富.
 
-5. **编写loader或plugin的思路?**
+5. **webpack热更新的实现?**
 
-   ​
+6. **webpack优化**
 
-6. **webpack热更新的实现?**
+   - 项目主要是基于Cesium框架做的一些修改与扩展,Cesium库打包后也非常庞大,我们使用externals进行优化,让webpack避免重复打包该库,并且让其可以通过es6的import进行引入
+   - 使用happypack对loader的执行过程从单一进程的形式拓展为多进程模式,从而在不修改配置的情况下提提高了编译过程的速度
+   - 使用uglify对代码进行压缩,减少代码下载的时间
+   - 通过commonsChunkPlugin对js代码进行分割,并通过require.ensure进行按需加载
 
-7. **webpack优化前端性能**
-
-8. **webpack自身的优化**
-
-9. **webpack的构建流程?**
+7. **webpack的构建流程?**
 
