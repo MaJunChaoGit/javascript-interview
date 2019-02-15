@@ -54,6 +54,8 @@
 
 5. **webpack热更新的实现?**
 
+   已有文章
+
 6. **webpack优化**
 
    - 项目主要是基于Cesium框架做的一些修改与扩展,Cesium库打包后也非常庞大,我们使用externals进行优化,让webpack避免重复打包该库,并且让其可以通过es6的import进行引入
