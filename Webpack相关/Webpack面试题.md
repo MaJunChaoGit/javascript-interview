@@ -26,9 +26,7 @@
    - 对于知识背景来说
      gulp更像后端开发者的思路，需要对于整个流程了如指掌 webpack更倾向于前端开发者的思路
 
-3. ​
-
-4. **使用了哪些Plugin,用来解决什么问题?**
+3. **使用了哪些Plugin,用来解决什么问题?**
 
    - HotModuleReplacementPlugin
 
@@ -50,7 +48,7 @@
 
      当然还有一些常用的如压缩混淆代码,Vue组件插件,Webpack进度条,HTML模板生成,CSS样式提出,SASS和LESS的单独提出等插件也经常使用.
 
-5. 使用了哪些Loader,用来解决什么问题?
+4. **使用了哪些Loader,用来解决什么问题?**
 
    - worker-loader
 
@@ -68,24 +66,24 @@
 
      用于解析vue文件
 
-6. **Loader和Plugin 的不同?**
+5. **Loader和Plugin 的不同?**
 
    loader主要是用于加载转化一些webpack资深无法加载的文件,如jsx,vue等.他的作用的加载,并作用于一个个文件上.
 
    plugin的作用是用于拓展一些webpack的功能,它将直接作用与webpack之上,相比于loader只专注于解析加载文件,plugin的功能更加的丰富.
 
-7. **webpack热更新的实现?**
+6. **webpack热更新的实现?**
 
    已有文章
 
-8. **webpack优化**
+7. **webpack优化**
 
    - 项目主要是基于Cesium框架做的一些修改与扩展,Cesium库打包后也非常庞大,我们使用externals进行优化,让webpack避免重复打包该库,并且让其可以通过es6的import进行引入
    - 使用happypack对loader的执行过程从单一进程的形式拓展为多进程模式,从而在不修改配置的情况下提提高了编译过程的速度
    - 使用uglify对代码进行压缩,减少代码下载的时间
    - 通过commonsChunkPlugin对js代码进行分割,并通过require.ensure进行按需加载
 
-9. **webpack的构建流程?**
+8. **webpack的构建流程?**
 
    Webpack 的运行流程是一个串行的过程，从启动到结束会依次执行以下流程：
 
