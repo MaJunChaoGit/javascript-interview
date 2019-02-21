@@ -22,7 +22,7 @@
 
 5. **HotModuleReplacement.runtime 对模块进行热更新**
 
-   HTR runtime通过模块的id找出过时的模块和依赖,将其删除,然后将最新的模块进行添加.当下次调用webpack_require时就可以获取到最新的代码了.
+   HMR runtime通过模块的id找出过时的模块和依赖,将其删除,然后将最新的模块进行添加.当下次调用webpack_require时就可以获取到最新的代码了.
 
 
 
