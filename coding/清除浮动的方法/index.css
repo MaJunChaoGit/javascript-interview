@@ -1,0 +1,47 @@
+div {
+  color: white;
+}
+.div1 {
+  background-color: red;
+}
+.left {
+  float: left;
+  background-color: orange;
+}
+.right {
+  float: right;
+  background-color: green;
+}
+.div2 {
+  background-color: blue;
+}
+
+
+/* 第一种方式使用:after伪元素进行清除浮动 */
+/* .clearfix:after {
+  display: block;
+  clear: both;
+  content: "";
+  visibility: hidden;
+  height: 0;
+}
+.clearfix {
+  zoom: 1;
+}
+ */
+
+/* 第二种在结尾处添加一个空的div */
+/* #clearfix {
+  clear: both;
+} */
+
+/* 第三种使父级元素触发BFC */
+/* .bfc {
+  overflow: hidden;
+} */
+
+/* 第四种使父级元素变成table定位 */
+/* .table {
+  width: 100%;
+  display: table;
+} */
