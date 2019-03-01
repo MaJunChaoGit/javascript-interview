@@ -1,0 +1,35 @@
+
+.modal {
+  position: fixed;
+  background-color: rgba(200, 200, 200, 0.7);
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: -o-flex;
+  display: flex;
+  justify-content: center;
+  -ms-align-items: center;
+  align-items: center;
+  display: none;
+}
+label {
+  border: 1px solid #eee;
+  border-radius: 6px;
+  padding: 4px;
+  cursor: pointer;
+}
+#check {
+  visibility: hidden;
+}
+
+input:checked~.modal{
+ display: -webkit-flex;
+ display: -moz-flex;
+ display: -ms-flex;
+ display: -o-flex;
+ display: flex;
+}
