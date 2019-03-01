@@ -1,0 +1,13 @@
+.btn1 {
+  /* display:inline-block; */
+  background:url(./sina_gray_btn.png) no-repeat left top;
+  padding-left:3px; color:#000;
+  font-size:12px;
+  text-decoration:none;
+}
+.btn1 cite {
+  /* display:block; */
+  line-height:26px;
+  padding:0 13px 0 10px;
+  background:url(./sina_gray_btn.png) no-repeat right top;
+}
